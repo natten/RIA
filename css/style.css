@@ -1,0 +1,68 @@
+.upload {
+    font-family: 'Times New Roman',Times,serif;
+    font-size: 16px;
+    background-color: #9999ff;
+    border-style: none;
+}
+
+#glow, #sharpen, #clear, #blur  {
+    font-family: 'Times New Roman',Times,serif;
+    font-size: 16px;
+    background-color: #9999ff;
+    border-style: none;
+    position: fixed;
+    bottom: 20px;
+    float: left
+}
+
+.border_top {
+    width: 98%; height: 50px;
+    background-color: #bfbebe;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+/*
+.border_bottom {
+    width: 98%; height: 50px;
+    background-color: #bfbebe;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+} */
+
+/* Styles for upload button */
+.upload_textbox
+{
+    position: relative;
+    float: left;
+    top: 15px;
+    left: 30px;
+}
+
+.upload_div
+{
+    position: relative;
+    width: 100px;
+    height: 23px;
+    overflow: hidden;
+    top: 15px;
+    left: 30px;
+}
+
+.upload_hidden
+{
+    font-size: 23px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    opacity: 0;
+
+    filter: alpha(opacity=0); 
+    -ms-filter: "alpha(opacity=0)"; 
+    -khtml-opacity: 0; 
+    -moz-opacity: 0;
+
+}
+
+
