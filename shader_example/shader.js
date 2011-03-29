@@ -34,12 +34,12 @@ function bump(canvas_composite, canvas_texture, canvas_normalmap, light_x, light
             var normal_y = normals[n + 1];
             var normal_z = normals[n + 2];
 
-            //Beräkna längd. normalisera sedan invertera
-            var length = 1.0/Math.sqrt((direction_x * direction_x) + (direction_y * direction_y) + (direction_z * direction_z));
-            direction_x *= length;
-            direction_y *= length;
-            direction_z *= length;
-
+            //Normalisera vektor
+            var abslength = Math.sqrt((direction_x * direction_x) + (direction_y * direction_y) + (direction_z * direction_z));
+            direction_x = direction_x/abslength;
+            direction_y = direction_y/abslength;
+            direction_z = direction_z/abslength;
+            
             //Beräkna dotprodukt
             var c_x = normal_x * direction_x;
             var c_y = normal_y * direction_y;
@@ -51,8 +51,8 @@ function bump(canvas_composite, canvas_texture, canvas_normalmap, light_x, light
             var shininess = 10;
             //Sätt slutgiltig färg för pixel. Sker per kanal exklusive alphakanal
             for(var c = 0; c < 3; c++) {
-                var c_diffuse = clamp(pixeldata[p + c] * Math.max(dot, 0.0));
-                var c_specular = clamp(pixeldata[p + c] * Math.pow(Math.max(dot, 0,0), 0.3 * shininess));
+                var c_diffuse = clamp(pixeldata[p + c] * Math.max(dot, 0.0), 0, 255);
+                var c_specular = clamp(pixeldata[p + c] * Math.pow(Math.max(dot, 0,0), 0.3 * shininess), 0, 255);
                 var c_final = c_ambient + c_diffuse + c_specular;
 
                 pixeldata[p + c] = clamp(c_final, 0, 255)
@@ -80,6 +80,8 @@ function clamp(value, min, max) {
 
 /**
  * Hämtar normaler från normalmap
+ * @param {object} Canvas innehållande normalmap
+ * @return {array} Normals
  */
 function getNormals(canvas) {
     var normals = [];
@@ -102,11 +104,11 @@ function getNormals(canvas) {
         var normal_z = pixeldata[i + 2];
         //Alpha använder vi ej
 
-        //Normalisera och invertera
-        length = 1.0/Math.sqrt((normal_x * normal_x) + (normal_y * normal_y) + (normal_z * normal_z));
-        normal_x *= length;
-        normal_y *= length;
-        normal_z *= length;
+        //Normalisera vektor
+        var abslength = Math.sqrt((normal_x * normal_x) + (normal_y * normal_y) + (normal_z * normal_z));
+        normal_x = normal_x/abslength;
+        normal_y = normal_y/abslength;
+        normal_z = normal_z/abslength;
         
         //Lägg in dem i våran array
         normals.push(normal_x);
