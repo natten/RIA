@@ -41,18 +41,22 @@ FileManager.prototype.upload = function(event) {
             var ctx = FileManager.image.getContext('2d');
             // Create new image object
             var img = new Image();
+
             img.onload = function() {
                 // Draw image object with canvas
-                ctx.drawImage(img, 0, 0);
+                ctx.clearRect(0, 0, FileManager.image.width, FileManager.image.height);
+                var x = (FileManager.image.width / 2) - (img.width / 2);
+                var y = (FileManager.image.height / 2) - (img.height / 2);
+                ctx.drawImage(img, x, y);
             }
             // Insert data from uploaded file into image object
             img.title = file.name;
-            img.src = e.target.result;;
+            img.src = e.target.result;
+           
         };
     })(imagefile);
     // Upload!
     fr.readAsDataURL(imagefile);
-
     //TODO Fix id
     //setImage(document.getElementById("image"));
 }

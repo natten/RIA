@@ -10,6 +10,7 @@
 var DOMRef = function() {
     var Refs = function () {
         this.imageref = "#image";
+        this.msgboxref = "#message_box";
     };
     this.refs = new Refs();
     this.setup();

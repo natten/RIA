@@ -7,7 +7,7 @@ and open the template in the editor.
   <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <script src="lib/jquery-1.5.1.js"></script>
     <script src="lib/pixastic.custom.js"></script>
     <script src="PicApp.js"></script>
@@ -15,6 +15,7 @@ and open the template in the editor.
     <script src="Actions.js"></script>
     <script src="SimpleImageProcess.js"></script>
     <script src="DOMRef.js"></script>
+    <script src="MessageUtil.js"></script>
     <script>
         picapp = new PicApp();
         
@@ -22,7 +23,25 @@ and open the template in the editor.
             try {  
                 var fm = picapp.getFileManager();
                 $("#upload")[0].addEventListener("change", fm.upload, null);
-                $("#download")[0].addEventListener("click", fm.download, null)
+                $("#download")[0].addEventListener("click", fm.download, null);
+
+                //Squares.
+                var context = $("#image")[0].getContext('2d');
+                var odd = true;
+                for(var y = 0; y < context.canvas.width; y += 10) {
+                    for(var x = 0; x < context.canvas.width; x += 10) {
+                        if(odd) {
+                            odd = !odd;
+                            context.fillStyle = "grey";
+                        } else {
+                            odd = !odd
+                            context.fillStyle = "white";
+                        }
+                        context.fillRect(x, y, 10, 10);
+                    }
+                    odd = !odd;
+                }
+
             } catch(e) {
                 alert(e);
             }
@@ -30,14 +49,25 @@ and open the template in the editor.
 
     </script>
   </head>
-  <body onload="load();">
-    <input type="file" name="upload" id="upload" />
-    <canvas id="image" width="500" height="400"></canvas>
-    <input type="button" value="blur" onclick="picapp.doAction('blur')"/>
-    <input type="button" value="glow" onclick="picapp.doAction('glow')"/>
-    <input type="button" value="sharpen" onclick="picapp.doAction('sharpen')"/>
-    <input type="button" value="clear" onclick="picapp.doAction('clear')"/>
-    <input type="button" value="download" id="download"/>
+    <body onload="load();">
+        <div class="border_top"/>
+        <!-- Workaround
+            http://tiagoe.blogspot.com/2010/01/css-style-typefile-tags.html
+        -->
+        <input id="filename" class="upload_textbox" readonly />
+        <div class="upload_div">
+            <input type="button" value="Upload" class="upload"/>
+            <input type="file" id="upload" class="upload_hidden" onchange="document.getElementById('filename').value = this.value" />
+        </div>
+        <input type="button" value="Download" id="download"/>
 
-  </body>
+        <canvas id="image" width="800" height="500"></canvas>
+        
+        <input type="button" value="Blur" id="blur" onclick="picapp.doAction('blur')"/>
+        <input type="button" value="Glow" id="glow" onclick="picapp.doAction('glow')"/>
+        <input type="button" value="Sharpen" id="sharpen" onclick="picapp.doAction('sharpen')"/>
+        <input type="button" value="Reset" id="clear" onclick="picapp.doAction('clear')"/>
+        <div class="border_bottom"/>
+        <div id="message_box"/>
+    </body>
 </html>

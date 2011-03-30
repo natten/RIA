@@ -23,7 +23,9 @@ MessageUtil.getInstance = function () {
 }
 
 MessageUtil.prototype.messageBox = function(message) {
-
+    var obj = DOMRef.getInstance().refs.msgboxref;
+    var element = obj[0];
+    element.innerHTML = "<p>" + message + "</p>";
 }
 
 MessageUtil.prototype.beginLoad = function() {
