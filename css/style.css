@@ -6,16 +6,21 @@
 }
 
 #download {
-    position: fixed;
-    top: 25px;
+    position: absolute;
+    top: 15px;
     left: 280px;
 }
 
 #image {
-    position: fixed;
+/*    position: fixed;
     top: 50px;
-    left: 100px;
-    z-index: -1;
+    left: 100px;*/
+    top: 27px;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: -2;
 }
 
 #message_box {
